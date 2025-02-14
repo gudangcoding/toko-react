@@ -1,0 +1,81 @@
+models:
+  User:
+    name: string
+    email: string:unique
+    password: string
+    phone: string:nullable
+    address: text:nullable
+    level: enum:admin,user default:user
+
+  Categories:
+    name: string:unique
+    relationships:
+      hasMany: Product
+
+  Product:
+    Categories_id: foreignId:Categories
+    name: string:unique
+    description: longtext
+    image: string
+    price: integer
+    stock: integer
+    relationships:
+      belongsTo: Categories
+      hasMany: OrderItem
+
+  Order:
+    user_id: foreignId:user
+    total: integer
+    status: enum:pending,paid,shipped,delivered,canceled default:pending
+    payment_status: enum:unpaid,paid
+    shipping_status: enum:pending,shipped,delivered,canceled default:pending
+    relationships:
+      hasMany: OrderItem
+      belongsTo: user
+
+  OrderItem:
+    order_id: foreignId:order
+    product_id: foreignId:product
+    quantity: integer
+    price: integer
+    relationships:
+      belongsTo: order, product
+
+  Payment:
+    order_id: foreignId:order
+    payment_type: string
+    payment_code: string:nullable
+    payment_status: enum:pending,paid,failed default:pending
+    timestamps: true
+
+  Shipping:
+    order_id: foreignId:order
+    courier: string
+    service: string
+    cost: integer
+    tracking_number: string:nullable
+    timestamps: true
+
+seeders: Categories, product, user, order, order_item
+
+controllers:
+  # Web Controllers
+  Categories:
+    resource
+  Product:
+    resource
+  User:
+    resource
+  Order:
+    resource
+
+
+  # API Controllers
+  api\Categories:
+    resource: api.index,api.show
+  api\Product:
+    resource: api.index,api.show
+  api\User:
+    resource: api.register,api.login,api.logout
+  api\Order:
+    resource: api.index,api.show,api.checkout,api.ongkir

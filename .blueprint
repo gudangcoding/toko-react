@@ -1,0 +1,88 @@
+created:
+    - app/Http/Controllers/CategoriesController.php
+    - app/Http/Controllers/ProductController.php
+    - app/Http/Controllers/UserController.php
+    - app/Http/Controllers/OrderController.php
+    - app/Http/Controllers/api/CategoriesController.php
+    - app/Http/Controllers/api/ProductController.php
+    - app/Http/Controllers/api/UserController.php
+    - app/Http/Controllers/api/OrderController.php
+    - database/factories/UserFactory.php
+    - database/factories/CategoriesFactory.php
+    - database/factories/ProductFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/OrderItemFactory.php
+    - database/factories/PaymentFactory.php
+    - database/factories/ShippingFactory.php
+    - database/migrations/2025_02_14_144306_create_users_table.php
+    - database/migrations/2025_02_14_144307_create_categories_table.php
+    - database/migrations/2025_02_14_144308_create_products_table.php
+    - database/migrations/2025_02_14_144309_create_orders_table.php
+    - database/migrations/2025_02_14_144310_create_order_items_table.php
+    - database/migrations/2025_02_14_144311_create_payments_table.php
+    - database/migrations/2025_02_14_144312_create_shippings_table.php
+    - app/Models/User.php
+    - app/Models/Categories.php
+    - app/Models/Product.php
+    - app/Models/Order.php
+    - app/Models/OrderItem.php
+    - app/Models/Payment.php
+    - app/Models/Shipping.php
+    - database/seeders/CategoriesSeeder.php
+    - database/seeders/ProductSeeder.php
+    - database/seeders/UserSeeder.php
+    - database/seeders/OrderSeeder.php
+    - database/seeders/OrderItemSeeder.php
+    - tests/Feature/Http/Controllers/CategoriesControllerTest.php
+    - tests/Feature/Http/Controllers/ProductControllerTest.php
+    - tests/Feature/Http/Controllers/UserControllerTest.php
+    - tests/Feature/Http/Controllers/OrderControllerTest.php
+    - tests/Feature/Http/Controllers/api/CategoriesControllerTest.php
+    - tests/Feature/Http/Controllers/api/ProductControllerTest.php
+    - tests/Feature/Http/Controllers/api/UserControllerTest.php
+    - tests/Feature/Http/Controllers/api/OrderControllerTest.php
+    - app/Http/Resources/api/CategoryCollection.php
+    - app/Http/Resources/api/CategoryResource.php
+    - app/Http/Resources/api/ProductCollection.php
+    - app/Http/Resources/api/ProductResource.php
+    - app/Http/Resources/api/OrderCollection.php
+    - app/Http/Resources/api/OrderResource.php
+    - resources/views/category/index.blade.php
+    - resources/views/category/create.blade.php
+    - resources/views/category/show.blade.php
+    - resources/views/category/edit.blade.php
+    - resources/views/product/index.blade.php
+    - resources/views/product/create.blade.php
+    - resources/views/product/show.blade.php
+    - resources/views/product/edit.blade.php
+    - resources/views/user/index.blade.php
+    - resources/views/user/create.blade.php
+    - resources/views/user/show.blade.php
+    - resources/views/user/edit.blade.php
+    - resources/views/order/index.blade.php
+    - resources/views/order/create.blade.php
+    - resources/views/order/show.blade.php
+    - resources/views/order/edit.blade.php
+updated:
+    - routes/api.php
+    - routes/web.php
+models:
+    User: { name: string, email: 'string:unique', password: string, phone: 'string:nullable', address: 'text:nullable', level: 'enum:admin,user default:user' }
+    Category: { name: 'string:unique', relationships: { hasMany: Product } }
+    Product: { Categories_id: 'foreignId:Categories', name: 'string:unique', description: longtext, image: string, price: integer, stock: integer, relationships: { belongsTo: Categories, hasMany: OrderItem } }
+    Order: { user_id: 'foreignId:user', total: integer, status: 'enum:pending,paid,shipped,delivered,canceled default:pending', payment_status: 'enum:unpaid,paid', shipping_status: 'enum:pending,shipped,delivered,canceled default:pending', relationships: { hasMany: OrderItem, belongsTo: user } }
+    OrderDetail: { order_id: 'foreign:Order', product_id: 'foreign:Product', quantity: integer, price: 'decimal:8,2', relationships: { belongsTo: 'Order, Product' } }
+    OrderItem: { order_id: 'foreignId:order', product_id: 'foreignId:product', quantity: integer, price: integer, relationships: { belongsTo: 'order, product' } }
+    Widget: { softdeletes: softDeletes }
+    categories: { name: 'string:unique', relationships: { hasMany: Product } }
+    products: { category_id: 'foreignId:categories', name: 'string:unique', description: longtext, image: string, price: integer, stock: integer, relationships: { belongsTo: categories, hasMany: OrderItem } }
+    orders: { user_id: 'foreignId:users', total: integer, status: 'enum:pending,paid,shipped,delivered,canceled', payment_status: 'enum:unpaid,paid', shipping_status: 'enum:pending,shipped,delivered,canceled default:pending', relationships: { hasMany: OrderItem, belongsTo: users } }
+    order_items: { order_id: 'foreignId:orders', product_id: 'foreignId:products', quantity: integer, price: integer, relationships: { belongsTo: 'orders, products' } }
+    Categories: { name: 'string:unique', relationships: { hasMany: Product } }
+    Products: { category_id: 'foreignId:categories', name: 'string:unique', description: longtext, image: string, price: integer, stock: integer, relationships: { belongsTo: categories, hasMany: OrderItem } }
+    Orders: { user_id: 'foreignId:users', total: integer, status: 'enum:pending,paid,shipped,delivered,canceled default:pending', payment_status: 'enum:unpaid,paid', shipping_status: 'enum:pending,shipped,delivered,canceled default:pending', relationships: { hasMany: OrderItems, belongsTo: users } }
+    Order_items: { order_id: 'foreignId:orders', product_id: 'foreignId:products', quantity: integer, price: integer, relationships: { belongsTo: 'orders, products' } }
+    OrderItems: { order_id: 'foreignId:orders', product_id: 'foreignId:products', quantity: integer, price: integer, relationships: { belongsTo: 'orders, products' } }
+    Post: { title: string, body: text, published: boolean, relationships: { belongsTo: User } }
+    Payment: { order_id: 'foreignId:order', payment_type: string, payment_code: 'string:nullable', payment_status: 'enum:pending,paid,failed default:pending', timestamps: timestamps }
+    Shipping: { order_id: 'foreignId:order', courier: string, service: string, cost: integer, tracking_number: 'string:nullable', timestamps: timestamps }
