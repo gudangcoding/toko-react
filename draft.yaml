@@ -31,7 +31,7 @@ models:
     shipping_status: enum:pending,shipped,delivered,canceled default:pending
     relationships:
       hasMany: OrderItem
-      belongsTo: user
+      belongsTo: user, shipping, payment
 
   OrderItem:
     order_id: foreignId:order
@@ -47,6 +47,8 @@ models:
     payment_code: string:nullable
     payment_status: enum:pending,paid,failed default:pending
     timestamps: true
+    relationships:
+      hasMany: order
 
   Shipping:
     order_id: foreignId:order
@@ -55,6 +57,8 @@ models:
     cost: integer
     tracking_number: string:nullable
     timestamps: true
+    relationships:
+      hasMany: order
 
 seeders: Categories, product, user, order, order_item
 
