@@ -65,7 +65,7 @@ seeders: Categories, product, user, order, order_item
 controllers:
   # Web Controllers
   Categories:
-    resource
+    resource: index,api.index
   Product:
     resource
   User:
@@ -83,3 +83,5 @@ controllers:
     resource: api.register,api.login,api.logout
   api\Order:
     resource: api.index,api.show,api.checkout,api.ongkir
+
+

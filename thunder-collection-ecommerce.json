@@ -1,0 +1,227 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "E-commerce API",
+    "requests": [
+      {
+        "name": "Register",
+        "method": "POST",
+        "url": "{{base_url}}/api/register",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "name": "User Test",
+            "email": "usertest@example.com",
+            "password": "password",
+            "password_confirmation": "password"
+          }
+        }
+      },
+      {
+        "name": "Login",
+        "method": "POST",
+        "url": "{{base_url}}/api/login",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "email": "usertest@example.com",
+            "password": "password"
+          }
+        }
+      },
+      {
+        "name": "Logout",
+        "method": "POST",
+        "url": "{{base_url}}/api/logout",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      {
+        "name": "Get Categories",
+        "method": "GET",
+        "url": "{{base_url}}/api/categories",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      {
+        "name": "Get Category Detail",
+        "method": "GET",
+        "url": "{{base_url}}/api/categories/1",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      {
+        "name": "Create Category",
+        "method": "POST",
+        "url": "{{base_url}}/api/categories",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "name": "Category Test"
+          }
+        }
+      },
+      {
+        "name": "Update Category",
+        "method": "PUT",
+        "url": "{{base_url}}/api/categories/1",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "name": "Category Updated"
+          }
+        }
+      },
+      {
+        "name": "Delete Category",
+        "method": "DELETE",
+        "url": "{{base_url}}/api/categories/1",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      {
+        "name": "Get Products",
+        "method": "GET",
+        "url": "{{base_url}}/api/products",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ]
+      },
+      {
+        "name": "Create Product",
+        "method": "POST",
+        "url": "{{base_url}}/api/products",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "name": "Product Test",
+            "price": 100000,
+            "category_id": 1
+          }
+        }
+      },
+      {
+        "name": "Create Order",
+        "method": "POST",
+        "url": "{{base_url}}/api/orders",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "product_id": 1,
+            "quantity": 2,
+            "destination": "501",
+            "courier": "jne"
+          }
+        }
+      },
+      {
+        "name": "Midtrans Callback",
+        "method": "POST",
+        "url": "{{base_url}}/api/midtrans/callback",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "type": "json",
+          "raw": {
+            "order_id": "1",
+            "status_code": "200",
+            "gross_amount": "200000",
+            "signature_key": "{{signature_key}}",
+            "transaction_status": "settlement"
+          }
+        }
+      }
+    ],
+    "variables": [
+      {
+        "name": "base_url",
+        "value": "http://localhost:8000"
+      },
+      {
+        "name": "token",
+        "value": "your_token_here"
+      },
+      {
+        "name": "signature_key",
+        "value": "your_signature_key_here"
+      }
+    ]
+  }
